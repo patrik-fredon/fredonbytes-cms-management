@@ -6,7 +6,7 @@ function mockDb() {
     cart_id: string;
     variant_id: string;
     quantity: number;
-    unit_price: number;
+    unit_price?: number;
   }> = [];
 
   return {
@@ -57,6 +57,42 @@ describe("cart service", () => {
     await expect(svc.getActiveCart("u1")).resolves.toMatchObject({
       id: "c1",
       total: 4000,
+    });
+  });
+
+  it("keeps cart total when cart items do not have unit_price", async () => {
+    const db = {
+      from(table: string) {
+        if (table === "carts") {
+          return {
+            select: vi.fn().mockReturnValue({
+              eq: vi.fn().mockResolvedValue({
+                data: [{ id: "c1", total: 1500 }],
+                error: null,
+              }),
+            }),
+          };
+        }
+
+        if (table === "cart_items") {
+          return {
+            select: vi.fn().mockReturnValue({
+              eq: vi.fn().mockResolvedValue({
+                data: [{ quantity: 2 }],
+                error: null,
+              }),
+            }),
+          };
+        }
+
+        throw new Error(`unexpected table ${table}`);
+      },
+    };
+    const svc = createCartService(db as never);
+
+    await expect(svc.getActiveCart("u1")).resolves.toMatchObject({
+      id: "c1",
+      total: 1500,
     });
   });
 });

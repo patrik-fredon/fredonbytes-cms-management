@@ -47,11 +47,23 @@ export function createCartService(db: CartDb) {
           throw new ProviderError("SUPABASE_CART_ITEMS_FAILED", itemError.message);
         }
 
-        total = (items ?? []).reduce((sum, item) => {
+        const pricedItems = (items ?? []).reduce((acc, item) => {
+          const hasUnitPrice = item.unit_price !== null && item.unit_price !== undefined;
+          if (!hasUnitPrice) {
+            return { total: acc.total, missingUnitPrice: true };
+          }
+
           const quantity = Number(item.quantity ?? 0);
           const unitPrice = Number(item.unit_price ?? 0);
-          return sum + (quantity * unitPrice);
-        }, 0);
+          return {
+            total: acc.total + (quantity * unitPrice),
+            missingUnitPrice: acc.missingUnitPrice || !Number.isFinite(unitPrice),
+          };
+        }, { total: 0, missingUnitPrice: false });
+
+        if ((items?.length ?? 0) > 0 && !pricedItems.missingUnitPrice) {
+          total = pricedItems.total;
+        }
       }
 
       return {
