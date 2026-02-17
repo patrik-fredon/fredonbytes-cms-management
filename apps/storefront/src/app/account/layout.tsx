@@ -15,7 +15,7 @@ const navItems = [
 
 export default async function AccountLayout({children}: LayoutProps<'/account'>) {
     return (
-        <div className="container mx-auto px-4 py-30">
+        <div className="container mx-auto px-4 py-[7.5rem]">
             <div className="flex gap-8">
                 <aside className="w-64 shrink-0">
                     <nav className="space-y-1">
