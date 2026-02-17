@@ -11,8 +11,7 @@ export function createSupabaseServices(client: {
   admin: SupabaseClientLike;
 } | SupabaseClientLike) {
   const authClient = "public" in client ? client.public : client;
-  const dbClient = "admin" in client ? client.admin : client;
-  const accountClient = "public" in client ? client.public : client;
+  const domainClient = "public" in client ? client.public : client;
 
   return {
     auth: {
@@ -32,11 +31,11 @@ export function createSupabaseServices(client: {
         return;
       },
     },
-    catalog: createCatalogService(dbClient as never),
-    cart: createCartService(dbClient as never),
-    checkout: createCheckoutService(dbClient),
-    orders: createOrdersService(dbClient),
-    accounts: createAccountsService(accountClient),
+    catalog: createCatalogService(domainClient as never),
+    cart: createCartService(domainClient as never),
+    checkout: createCheckoutService(domainClient),
+    orders: createOrdersService(domainClient),
+    accounts: createAccountsService(domainClient),
   };
 }
 
