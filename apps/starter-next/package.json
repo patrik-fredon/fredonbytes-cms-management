@@ -1,0 +1,20 @@
+{
+  "name": "starter-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3002",
+    "build": "next build",
+    "start": "next start",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "next": "^16.0.10",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "@fredonbytes/config": "0.1.0",
+    "@fredonbytes/core": "0.1.0",
+    "@fredonbytes/adapter-supabase": "0.1.0",
+    "@fredonbytes/adapter-vendure": "0.1.0"
+  }
+}
