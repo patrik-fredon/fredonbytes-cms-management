@@ -9,6 +9,14 @@ runAuthContractTests("supabase", () => {
         error: null,
       }),
     },
+    from: () => ({
+      select: () =>
+        Promise.resolve({
+          data: [],
+          error: null,
+        }),
+      insert: async () => ({ error: null }),
+    }),
   });
 
   return services.auth;
