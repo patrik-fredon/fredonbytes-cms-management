@@ -11,4 +11,16 @@ describe("supabase core schema", () => {
     const sql = readFileSync(sqlPath, "utf8");
     expect(sql).toMatch(/create table if not exists carts/i);
   });
+
+  it("defines orders and cms_pages tables", () => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    const sqlPath = resolve(
+      __dirname,
+      "../migrations/20260217_0002_catalog_cart_orders_cms.sql",
+    );
+    const sql = readFileSync(sqlPath, "utf8");
+    expect(sql).toMatch(/create table if not exists orders/i);
+    expect(sql).toMatch(/create table if not exists cms_pages/i);
+  });
 });
