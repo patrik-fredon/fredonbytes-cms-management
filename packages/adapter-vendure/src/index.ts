@@ -2,15 +2,17 @@ import { ProviderError } from "@fredonbytes/core";
 
 export function createVendureServices(client: {
   query: (...args: unknown[]) => Promise<unknown>;
+  mutation?: (...args: unknown[]) => Promise<unknown>;
 }) {
   const asProviderError = (code: string, err: unknown) =>
     new ProviderError(code, `ProviderError: ${String(err)}`);
+  const mutate = client.mutation ?? client.query;
 
   return {
     auth: {
       async signIn(input: { email: string; password: string }) {
         try {
-          const result = await client.query("SignInDocument", input) as
+          const result = await mutate("SignInDocument", input) as
             | { userId?: string }
             | undefined;
 
@@ -54,7 +56,7 @@ export function createVendureServices(client: {
         quantity: number;
       }) {
         try {
-          await client.query("AddItemToOrderDocument", input);
+          await mutate("AddItemToOrderDocument", input);
         } catch (err) {
           throw asProviderError("VENDURE_CART_ADD_FAILED", err);
         }
@@ -63,7 +65,7 @@ export function createVendureServices(client: {
     checkout: {
       async placeOrder(cartId: string) {
         try {
-          const result = await client.query("PlaceOrderDocument", { cartId }) as
+          const result = await mutate("PlaceOrderDocument", { cartId }) as
             | { orderCode?: string }
             | undefined;
           return {
