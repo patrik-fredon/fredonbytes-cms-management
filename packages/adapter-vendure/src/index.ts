@@ -1,8 +1,10 @@
 import { ProviderError } from "@fredonbytes/core";
 
+type VendureRequest = (...args: unknown[]) => Promise<unknown>;
+
 export function createVendureServices(client: {
-  query: (...args: unknown[]) => Promise<unknown>;
-  mutation?: (...args: unknown[]) => Promise<unknown>;
+  query: VendureRequest;
+  mutation?: VendureRequest;
 }) {
   const asProviderError = (code: string, err: unknown) =>
     new ProviderError(code, `ProviderError: ${String(err)}`);
