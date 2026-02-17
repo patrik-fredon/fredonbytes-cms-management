@@ -30,8 +30,7 @@ export async function applyPromotionCode(formData: FormData) {
     const code = formData.get('code') as string;
     if (!code) return;
 
-    const res = await mutate(ApplyPromotionCodeMutation, {couponCode: code}, {useAuthToken: true});
-    console.log({res: res.data.applyCouponCode})
+    await mutate(ApplyPromotionCodeMutation, {couponCode: code}, {useAuthToken: true});
     updateTag('cart');
 }
 
@@ -40,7 +39,6 @@ export async function removePromotionCode(formData: FormData) {
     const code = formData.get('code') as string;
     if (!code) return;
 
-    const res = await mutate(RemovePromotionCodeMutation, {couponCode: code}, {useAuthToken: true});
-    console.log({removeRes: res.data.removeCouponCode});
+    await mutate(RemovePromotionCodeMutation, {couponCode: code}, {useAuthToken: true});
     updateTag('cart');
 }
