@@ -1,6 +1,9 @@
 import { loadConfig } from "@fredonbytes/config";
 import { createServiceContainer } from "@fredonbytes/core";
-import { createSupabaseServices } from "@fredonbytes/adapter-supabase";
+import {
+  createSupabaseClients,
+  createSupabaseServices,
+} from "@fredonbytes/adapter-supabase";
 import { createVendureServices } from "@fredonbytes/adapter-vendure";
 
 function getConfigInput() {
@@ -21,6 +24,7 @@ function getConfigInput() {
     SUPABASE_URL: process.env.SUPABASE_URL ?? "https://example.supabase.co",
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? "anon-key",
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY ?? "service-role-key",
+    DATABASE_URL: process.env.DATABASE_URL ?? "postgres://localhost:5432/fredonbytes",
   };
 }
 
@@ -28,16 +32,13 @@ export function getContainer() {
   const config = loadConfig(getConfigInput());
 
   return createServiceContainer(config, {
-    supabase: () => createSupabaseServices({
-      auth: {
-        async signInWithPassword() {
-          return {
-            data: { user: null },
-            error: { message: "Supabase auth client not configured" },
-          };
-        },
-      },
-    }),
+    supabase: () => {
+      if (config.FREDONBYTES_MODE !== "supabase") {
+        throw new Error("supabase config is required");
+      }
+
+      return createSupabaseServices(createSupabaseClients(config));
+    },
     vendure: () => createVendureServices({
       query: async () => ({}),
     }),

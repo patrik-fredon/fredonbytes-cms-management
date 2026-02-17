@@ -4,22 +4,19 @@ import { createCartService } from "./cart";
 import { createCheckoutService } from "./checkout";
 import { createOrdersService } from "./orders";
 import { createAccountsService } from "./accounts";
+import type { SupabaseClientLike } from "./client";
 
 export function createSupabaseServices(client: {
-  auth: {
-    signInWithPassword: (input: {
-      email: string;
-      password: string;
-    }) => Promise<{
-      data: { user: { id: string } | null };
-      error: { message: string } | null;
-    }>;
-  };
-}) {
+  public: SupabaseClientLike;
+  admin: SupabaseClientLike;
+} | SupabaseClientLike) {
+  const authClient = "public" in client ? client.public : client;
+  const dbClient = "admin" in client ? client.admin : client;
+
   return {
     auth: {
       async signIn(input: { email: string; password: string }) {
-        const { data, error } = await client.auth.signInWithPassword(input);
+        const { data, error } = await authClient.auth.signInWithPassword(input);
 
         if (error || !data.user) {
           throw new AuthError(
@@ -34,10 +31,12 @@ export function createSupabaseServices(client: {
         return;
       },
     },
-    catalog: createCatalogService(client as never),
-    cart: createCartService(client as never),
-    checkout: createCheckoutService(client),
-    orders: createOrdersService(client),
-    accounts: createAccountsService(client),
+    catalog: createCatalogService(dbClient as never),
+    cart: createCartService(dbClient as never),
+    checkout: createCheckoutService(dbClient),
+    orders: createOrdersService(dbClient),
+    accounts: createAccountsService(dbClient),
   };
 }
+
+export { createSupabaseClients } from "./client";
