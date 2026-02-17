@@ -7,3 +7,5 @@ test-results
 apps/starter-next/.next/
 apps/starter-next/next-env.d.ts
 apps/starter-next/tsconfig.json
+
+.worktrees/
