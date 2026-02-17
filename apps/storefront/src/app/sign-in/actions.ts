@@ -2,8 +2,6 @@
 
 import {getServiceContainer} from '@/lib/fredonbytes/container';
 
-const _serviceContainer = getServiceContainer();
-
 import {mutate} from '@/lib/vendure/api';
 import {LoginMutation, LogoutMutation} from '@/lib/vendure/mutations';
 import {removeAuthToken, setAuthToken} from '@/lib/auth';
