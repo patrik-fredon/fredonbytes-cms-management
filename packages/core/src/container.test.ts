@@ -12,4 +12,13 @@ describe("createServiceContainer", () => {
 
     expect(container.mode).toBe("supabase");
   });
+
+  it("throws when selected mode factory is missing", () => {
+    expect(() =>
+      createServiceContainer(
+        { FREDONBYTES_MODE: "supabase" },
+        { supabase: undefined as never, vendure: () => ({}) },
+      ),
+    ).toThrow(/supabase factory/i);
+  });
 });
