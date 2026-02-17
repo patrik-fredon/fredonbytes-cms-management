@@ -21,4 +21,13 @@ describe("createServiceContainer", () => {
       ),
     ).toThrow(/supabase factory/i);
   });
+
+  it("throws when selected vendure factory is missing", () => {
+    expect(() =>
+      createServiceContainer(
+        { FREDONBYTES_MODE: "vendure" },
+        { supabase: () => ({}), vendure: undefined as never },
+      ),
+    ).toThrow(/vendure factory/i);
+  });
 });

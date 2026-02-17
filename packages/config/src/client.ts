@@ -1,7 +1,7 @@
-import { configSchema } from "./schema";
+import { clientConfigSchema } from "./schema";
 
 export function loadClientConfig(env: Record<string, string | undefined>) {
-  const parsed = configSchema.parse(env);
+  const parsed = clientConfigSchema.parse(env);
 
   if (parsed.FREDONBYTES_MODE === "supabase") {
     return {

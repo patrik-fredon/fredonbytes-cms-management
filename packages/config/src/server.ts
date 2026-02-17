@@ -1,5 +1,5 @@
-import { configSchema } from "./schema";
+import { serverConfigSchema } from "./schema";
 
 export function loadServerConfig(env: Record<string, string | undefined>) {
-  return configSchema.parse(env);
+  return serverConfigSchema.parse(env);
 }
