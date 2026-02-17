@@ -10,6 +10,8 @@
     "test": "vitest --workspace vitest.workspace.ts run --passWithNoTests",
     "test:watch": "vitest --workspace vitest.workspace.ts",
     "test:e2e": "playwright test",
+    "test:e2e:vendure": "playwright test --project=vendure",
+    "test:e2e:supabase": "playwright test --project=supabase",
     "dev": "concurrently -n server,storefront -c blue,magenta \"npm run dev -w server\" \"npm run dev -w storefront\"",
     "dev:server": "npm run dev -w server",
     "dev:storefront": "npm run dev -w storefront",
