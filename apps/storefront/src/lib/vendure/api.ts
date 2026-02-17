@@ -123,7 +123,8 @@ export function createStorefrontVendureClient() {
                 : [variables: TVariables, options?: VendureRequestOptions]
         ) {
             // Align storefront query return shape with adapter client expectations.
-            const result = await query(document, variables as TVariables, options);
+            // @ts-expect-error - conditional tuple inference is too strict here; runtime call shape is valid
+            const result = await query(document, variables, options);
             return result.data;
         },
     };
