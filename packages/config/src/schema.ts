@@ -10,6 +10,7 @@ export const configSchema = z.discriminatedUnion("FREDONBYTES_MODE", [
     SUPABASE_URL: z.string().url(),
     SUPABASE_ANON_KEY: z.string().min(1),
     SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+    DATABASE_URL: z.string().min(1),
   }),
   baseSchema.extend({
     FREDONBYTES_MODE: z.literal("vendure"),

@@ -1,9 +1,15 @@
 import { describe, expect, it } from "vitest";
-import { loadConfig } from "./index";
+import { loadServerConfig } from "./index";
 
-describe("loadConfig", () => {
-  it("requires Supabase keys in supabase mode", () => {
-    expect(() => loadConfig({ FREDONBYTES_MODE: "supabase" }))
-      .toThrow(/SUPABASE_URL/);
+describe("loadServerConfig", () => {
+  it("requires DATABASE_URL in supabase mode", () => {
+    expect(() =>
+      loadServerConfig({
+        FREDONBYTES_MODE: "supabase",
+        SUPABASE_URL: "https://example.supabase.co",
+        SUPABASE_ANON_KEY: "anon",
+        SUPABASE_SERVICE_ROLE_KEY: "service",
+      }),
+    ).toThrow(/DATABASE_URL/);
   });
 });
