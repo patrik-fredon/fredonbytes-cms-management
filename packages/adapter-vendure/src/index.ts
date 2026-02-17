@@ -1,13 +1,17 @@
 import { ProviderError } from "@fredonbytes/core";
 
+type VendureRequest = (...args: unknown[]) => Promise<unknown>;
+
 export function createVendureServices(client: {
-  query: (...args: unknown[]) => Promise<unknown>;
+  query: VendureRequest;
+  mutation?: VendureRequest;
 }) {
   return {
     auth: {
       async signIn(input: { email: string; password: string }) {
         try {
-          const result = await client.query("SignInDocument", input) as
+          const executeMutation = client.mutation ?? client.query;
+          const result = await executeMutation("SignInDocument", input) as
             | { userId?: string }
             | undefined;
 
