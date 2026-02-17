@@ -5,7 +5,7 @@ describe("catalog service", () => {
   it("returns normalized product list", async () => {
     const from = vi.fn().mockReturnValue({
       select: vi.fn().mockResolvedValue({
-        data: [{ id: "p1", name: "Tee" }],
+        data: [{ id: "p1", name: "Tee", price: 2000 }],
         error: null,
       }),
     });
@@ -13,5 +13,6 @@ describe("catalog service", () => {
 
     const result = await svc.listProducts();
     expect(result.items[0].id).toBe("p1");
+    expect(result.items[0].price).toBe(2000);
   });
 });
