@@ -1,0 +1,9 @@
+node_modules
+.env
+.env.local
+*.log
+.DS_Store
+test-results
+apps/starter-next/.next/
+apps/starter-next/next-env.d.ts
+apps/starter-next/tsconfig.json

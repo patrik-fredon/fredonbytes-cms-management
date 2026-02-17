@@ -1,0 +1,31 @@
+{
+  "name": "vendure-test",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "vitest --workspace vitest.workspace.ts run --passWithNoTests",
+    "test:watch": "vitest --workspace vitest.workspace.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:vendure": "playwright test --project=vendure",
+    "test:e2e:supabase": "playwright test --project=supabase",
+    "dev": "concurrently -n server,storefront -c blue,magenta \"npm run dev -w server\" \"npm run dev -w storefront\"",
+    "dev:server": "npm run dev -w server",
+    "dev:storefront": "npm run dev -w storefront",
+    "build": "npm run build -w server && npm run build -w storefront",
+    "build:server": "npm run build -w server",
+    "build:storefront": "npm run build -w storefront",
+    "start": "concurrently -n server,storefront -c blue,magenta \"npm run start -w server\" \"npm run start -w storefront\"",
+    "start:server": "npm run start -w server",
+    "start:storefront": "npm run start -w storefront"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "concurrently": "^9.0.0",
+    "typescript": "^5.9.3",
+    "vitest": "^2.1.8"
+  }
+}
