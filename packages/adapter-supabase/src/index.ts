@@ -1,4 +1,6 @@
 import { AuthError } from "@fredonbytes/core";
+import { createCatalogService } from "./catalog";
+import { createCartService } from "./cart";
 
 export function createSupabaseServices(client: {
   auth: {
@@ -29,5 +31,7 @@ export function createSupabaseServices(client: {
         return;
       },
     },
+    catalog: createCatalogService(client as never),
+    cart: createCartService(client as never),
   };
 }
