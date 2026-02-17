@@ -21,10 +21,10 @@ function getConfigInput() {
 
   return {
     FREDONBYTES_MODE: "supabase" as const,
-    SUPABASE_URL: process.env.SUPABASE_URL ?? "https://example.supabase.co",
-    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ?? "anon-key",
-    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY ?? "service-role-key",
-    DATABASE_URL: process.env.DATABASE_URL ?? "postgres://localhost:5432/fredonbytes",
+    SUPABASE_URL: process.env.SUPABASE_URL,
+    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
+    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    DATABASE_URL: process.env.DATABASE_URL,
   };
 }
 

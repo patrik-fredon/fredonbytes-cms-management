@@ -7,7 +7,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@fredonbytes/core": "0.1.0"
+    "@fredonbytes/core": "0.1.0",
+    "@supabase/supabase-js": "^2.57.4"
   },
   "exports": {
     "./package.json": "./package.json",

@@ -12,6 +12,7 @@ export function createSupabaseServices(client: {
 } | SupabaseClientLike) {
   const authClient = "public" in client ? client.public : client;
   const dbClient = "admin" in client ? client.admin : client;
+  const accountClient = "public" in client ? client.public : client;
 
   return {
     auth: {
@@ -35,7 +36,7 @@ export function createSupabaseServices(client: {
     cart: createCartService(dbClient as never),
     checkout: createCheckoutService(dbClient),
     orders: createOrdersService(dbClient),
-    accounts: createAccountsService(dbClient),
+    accounts: createAccountsService(accountClient),
   };
 }
 
