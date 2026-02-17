@@ -26,6 +26,6 @@
     "@playwright/test": "^1.49.1",
     "concurrently": "^9.0.0",
     "typescript": "^5.9.3",
-    "vitest": "^2.1.8"
+    "vitest": "^4.0.18"
   }
 }
