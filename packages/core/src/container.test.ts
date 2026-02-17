@@ -1,0 +1,15 @@
+import { describe, expect, it, vi } from "vitest";
+import { createServiceContainer } from "./container";
+
+describe("createServiceContainer", () => {
+  it("uses supabase adapter in supabase mode", () => {
+    const container = createServiceContainer({
+      FREDONBYTES_MODE: "supabase",
+    } as never, {
+      supabase: vi.fn(() => ({ auth: {} })),
+      vendure: vi.fn(),
+    });
+
+    expect(container.mode).toBe("supabase");
+  });
+});
